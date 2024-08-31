@@ -49,7 +49,10 @@ mysqli_close($conexao);
             z-index: 1000;
             padding: 48px 0;
             /* Ajuste o padding conforme necessário */
-            background-color: #343a40;
+            background-color: #4B0082;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #4B0082), to(#224abe));
+            background-image: linear-gradient(180deg, #4B0082 10%, #224abe 100%);
+            background-size: cover;
             /* Cor de fundo da sidebar */
         }
 
@@ -163,25 +166,51 @@ mysqli_close($conexao);
 
 <body>
     <!-- Sidebar -->
+
     <nav class="sidebar">
-        <div class="sidebar-brand">
-            OS Admin
-        </div>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.php">
+            <div class="sidebar-brand-text mx-3"><img class="img-dashbord" src="img/favicon-alvina.png">TASK ADM</div>
+        </a>
+
+        <hr class="sidebar-divider my-0">
         <ul class="sidebar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="usuario.php">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="home.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Prioridades</span></a>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="usuario.php">
                     <i class="fa fa-user-circle mr-2"></i>
                     Usuários
                 </a>
             </li>
+            <hr class="sidebar-divider my-0">
             <li class="nav-item">
                 <a class="nav-link" href="to_do_list.php">
                     <i class="fas fa-fw fa-clipboard-list mr-2"></i>
                     Tarefas
                 </a>
             </li>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="cliente.php">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Clientes</span></a>
+            </li>
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="contato.php">
+                    <i class="fa fa-envelope"></i>
+                    <span>Contato</span></a>
+            </li>
         </ul>
     </nav>
+
+    </ul>
 
     <!-- Conteúdo da página -->
     <div id="content">
