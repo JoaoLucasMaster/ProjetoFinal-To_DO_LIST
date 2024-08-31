@@ -2,14 +2,25 @@
 require_once('./bd/conecta_bd.php');
 require_once('valida_session.php');
 
+
+
 unset($_SESSION['nome']);
 unset($_SESSION['email']);
 unset($_SESSION['senha']);
 
 $tasks = [];
-
-
+$priorityTasks = [];
 $conexao = conecta_bd();
+
+
+//alimentar a variavel $priorityTasks com as tarefas que possuem prioridade como objeto iteravel
+$sqlPriorityTasks = "SELECT * FROM task WHERE priority = 1";
+$resultPriorityTasks = mysqli_query($conexao, $sqlPriorityTasks);
+
+$sqlNoPriorityTasks = "SELECT * FROM task WHERE priority = 0";
+$resultNoPriorityTasks = mysqli_query($conexao, $sqlNoPriorityTasks);
+
+
 
 $users = [];
 
@@ -28,6 +39,11 @@ if ($result && mysqli_num_rows($result) > 0) {
 }
 
 mysqli_close($conexao);
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +95,7 @@ mysqli_close($conexao);
         }
 
         #content {
-            width: 35%;
+            width: 60%;
             /* Aumentar a largura para 90% da tela */
             max-width: 1200px;
             /* Limitar a largura máxima para não ficar exagerado em telas grandes */
@@ -118,7 +134,7 @@ mysqli_close($conexao);
             width: 28%;
             /* Diminuir a largura */
             padding: 10px;
-            margin: 5px 0;
+            margin-left: 15px;
             border-radius: 10px;
             border: 1px solid #eaeaea;
             background-color: #252839;
@@ -128,6 +144,7 @@ mysqli_close($conexao);
             -moz-appearance: none;
             appearance: none;
             text-align: center;
+            
         }
 
         /* Ajustar o tamanho do botão de adição */
@@ -151,7 +168,20 @@ mysqli_close($conexao);
         /* Icone do botão de adição */
         .form-button i {
             font-size: 20px;
+            
         }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            /* Espaçamento entre as colunas, ajuste conforme necessário */
+        }
+
+        .column {
+            flex: 1;
+            /* Faz com que ambas as colunas tenham o mesmo tamanho */
+        }
+
 
         /* Ajustar o estilo para o select em dispositivos móveis */
         @media (max-width: 600px) {
@@ -213,6 +243,7 @@ mysqli_close($conexao);
     </ul>
 
     <!-- Conteúdo da página -->
+    <!-- Conteúdo da página -->
     <div id="content">
         <!-- Aqui vai o conteúdo da sua página -->
         <div id="to_do">
@@ -229,47 +260,90 @@ mysqli_close($conexao);
                     <?php endforeach; ?>
                 </select>
 
+                <!-- novo campo para decidir se a tarefa sera prioridade -->
+                <select name="priority" required>
+                    <option value="0">Normal</option>
+                    <option value="1">Prioridade</option>
+                </select>
+
                 <button type="submit" class="form-button">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </form>
 
-            <div id="tasks">
-                <?php foreach ($tasks as $task): ?>
-                    <div class="task">
-                        <input
-                            type="checkbox"
-                            name="progress"
-                            class="progress <?= $task['completed'] ? 'done' : '' ?>"
-                            data-task-id="<?= $task['id'] ?>"
-                            <?= $task['completed'] ? 'checked' : '' ?>>
-
-                        <p class="task-description">
-                            <?= htmlspecialchars($task['description']) ?>
-                        </p>
-
-                        <div class="task-actions">
-                            <a class="action-button edit-button">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </a>
-
-                            <a href="actions/delete.php?id=<?= $task['id'] ?>" class="action-button delete-button">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </a>
-                        </div>
-
-                        <form action="actions/update.php" method="POST" class="to-do-form edit-task hidden">
-                            <input type="hidden" name="id" value="<?= $task['id'] ?>">
-                            <input type="text" name="description" placeholder="Edite sua tarefa aqui" value='<?= htmlspecialchars($task['description']) ?>'>
-                            <button type="submit" class="form-button confirm-button">
-                                <i class="fa-solid fa-check"></i>
-                            </button>
-                        </form>
+            <div class="container">
+                <div class="column">
+                    <h1>Tarefas com prioridade</h1>
+                    <div id="tasks">
+                        <?php foreach ($resultPriorityTasks as $task): ?>
+                            <div class="task">
+                                <input
+                                    type="checkbox"
+                                    name="progress"
+                                    class="progress <?= $task['completed'] ? 'done' : '' ?>"
+                                    data-task-id="<?= $task['id'] ?>"
+                                    <?= $task['completed'] ? 'checked' : '' ?>>
+                                <p class="task-description">
+                                    <?= htmlspecialchars($task['description']) ?>
+                                </p>
+                                <div class="task-actions">
+                                    <a class="action-button edit-button">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                    <a href="actions/delete.php?id=<?= $task['id'] ?>" class="action-button delete-button">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </a>
+                                </div>
+                                <form action="actions/update.php" method="POST" class="to-do-form edit-task hidden">
+                                    <input type="hidden" name="id" value="<?= $task['id'] ?>">
+                                    <input type="text" name="description" placeholder="Edite sua tarefa aqui" value='<?= htmlspecialchars($task['description']) ?>'>
+                                    <button type="submit" class="form-button confirm-button">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        <?php endforeach ?>
                     </div>
-                <?php endforeach ?>
+                </div>
+
+                <div class="column">
+                    <h1>Tarefas sem prioridade</h1>
+                    <div id="tasks">
+                        <?php foreach ($resultNoPriorityTasks as $task): ?>
+                            <div class="task">
+                                <input
+                                    type="checkbox"
+                                    name="progress"
+                                    class="progress <?= $task['completed'] ? 'done' : '' ?>"
+                                    data-task-id="<?= $task['id'] ?>"
+                                    <?= $task['completed'] ? 'checked' : '' ?>>
+                                <p class="task-description">
+                                    <?= htmlspecialchars($task['description']) ?>
+                                </p>
+                                <div class="task-actions">
+                                    <a class="action-button edit-button">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                    <a href="actions/delete.php?id=<?= $task['id'] ?>" class="action-button delete-button">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </a>
+                                </div>
+                                <form action="actions/update.php" method="POST" class="to-do-form edit-task hidden">
+                                    <input type="hidden" name="id" value="<?= $task['id'] ?>">
+                                    <input type="text" name="description" placeholder="Edite sua tarefa aqui" value='<?= htmlspecialchars($task['description']) ?>'>
+                                    <button type="submit" class="form-button confirm-button">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        <?php endforeach ?>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Bootstrap JS -->
