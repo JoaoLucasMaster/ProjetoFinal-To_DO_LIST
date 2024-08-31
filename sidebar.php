@@ -24,7 +24,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="usuario.php">
                 <i class="fa fa-user-circle"></i>
-                <span>Usuários</span></a>
+                <span>Administradores</span></a>
         </li>
 
         <!-- Divider -->
@@ -43,7 +43,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="cliente.php">
                 <i class="fas fa-fw fa-user"></i>
-                <span>Clientes</span></a>
+                <span>Usuários</span></a>
         </li>
 
         <!-- Divider -->

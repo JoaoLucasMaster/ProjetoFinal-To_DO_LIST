@@ -127,7 +127,7 @@ function consultaStatusUsuario($status) {
     $conexao = conecta_bd();
 
     // Preparar a consulta SQL para evitar SQL Injection
-    $query = $conexao->prepare("SELECT * FROM ordem WHERE status = ?");
+    $query = $conexao->prepare("SELECT * FROM task WHERE priority = 1;");
     $query->bind_param("s", $status);
 
     // Executar a consulta
@@ -170,6 +170,82 @@ function consultaStatusTerceirizado($cod_usuario,$status){
     return $total;
 
 
+}
+
+
+
+function consultaTarefaPrioridade() {
+    // Conectar ao banco de dados
+    $conexao = conecta_bd();
+
+    // Preparar a consulta SQL para evitar SQL Injection
+    $query = $conexao->prepare("SELECT * from task where priority = 1 and completed = 0;");
+    
+
+    // Executar a consulta
+    $query->execute();
+    
+    // Obter o resultado da consulta
+    $resultado = $query->get_result();
+    
+    // Contar o número de linhas retornadas
+    $dados = $resultado->num_rows;
+
+    // Fechar a consulta e a conexão
+    $query->close();
+    $conexao->close();
+
+    // Retornar o contador
+    return $dados;
+}
+
+function consultaTarefaNormal() {
+    // Conectar ao banco de dados
+    $conexao = conecta_bd();
+
+    // Preparar a consulta SQL para evitar SQL Injection
+    $query = $conexao->prepare("select * from task where priority = 0 and completed = 0");
+
+
+    // Executar a consulta
+    $query->execute();
+    
+    // Obter o resultado da consulta
+    $resultado = $query->get_result();
+    
+    // Contar o número de linhas retornadas
+    $dados = $resultado->num_rows;
+
+    // Fechar a consulta e a conexão
+    $query->close();
+    $conexao->close();
+
+    // Retornar o contador
+    return $dados;
+}
+
+function consultaTarefaCompleta() {
+    // Conectar ao banco de dados
+    $conexao = conecta_bd();
+
+    // Preparar a consulta SQL para evitar SQL Injection
+    $query = $conexao->prepare("select * from task where completed = 1");
+
+    // Executar a consulta
+    $query->execute();
+    
+    // Obter o resultado da consulta
+    $resultado = $query->get_result();
+    
+    // Contar o número de linhas retornadas
+    $dados = $resultado->num_rows;
+
+    // Fechar a consulta e a conexão
+    $query->close();
+    $conexao->close();
+
+    // Retornar o contador
+    return $dados;
 }
 
 

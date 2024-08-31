@@ -207,8 +207,11 @@ mysqli_close($conexao);
             -moz-appearance: none;
             appearance: none;
         }
-
-
+        .picture{
+            width: 50px;
+            height: 50px;
+        }
+        
         /* Ajustar o estilo para o select em dispositivos móveis */
         @media (max-width: 600px) {
             select {
@@ -225,7 +228,7 @@ mysqli_close($conexao);
 
     <nav class="sidebar">
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.php">
-            <div class="sidebar-brand-text mx-3"><img class="img-dashbord" src="img/favicon-alvina.png">TASK ADM</div>
+            <img class="picture" src="/img/favicon-alvina.png" alt="fotinha"> <p>TASK ADM</p>
         </a>
 
         <hr class="sidebar-divider my-0">

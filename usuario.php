@@ -21,7 +21,7 @@ unset ($_SESSION['senha']);
 
                 <div class="row">
                     <div class="col-md-8">
-                        <h6 class="m-0 font-weight-bold text-primary" id="title">GERENCIAR INFORMAÇÕES DOS USUÁRIOS</h6>
+                        <h6 class="m-0 font-weight-bold text-primary" id="title">GERENCIAR INFORMAÇÕES DOS ADMINISTRADORES</h6>
                     </div>
                     <div class="col-md-4 card_button_title">
                         <a title="Adicionar novo usuário" href="cad_usuario.php"><button type="button" class="btn btn-primary btn-sm card_button_title" data-toggle="modal" id=" "> <i class="fa fa-user-circle">&nbsp;</i> Adicionar Usuário</button></a>
