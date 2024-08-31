@@ -144,7 +144,19 @@ mysqli_close($conexao);
             -moz-appearance: none;
             appearance: none;
             text-align: center;
-            
+
+        }
+
+        .task-description {
+            display: flex;
+        }
+
+        .task-description-date {
+            font-size: 0.9rem;
+            color: #03bb85;
+            margin-left: 40px;
+
+            /* Impede que a data quebre para uma nova linha */
         }
 
         /* Ajustar o tamanho do botão de adição */
@@ -168,7 +180,7 @@ mysqli_close($conexao);
         /* Icone do botão de adição */
         .form-button i {
             font-size: 20px;
-            
+
         }
 
         .container {
@@ -180,6 +192,20 @@ mysqli_close($conexao);
         .column {
             flex: 1;
             /* Faz com que ambas as colunas tenham o mesmo tamanho */
+        }
+
+        input[name="data"] {
+            width: 150px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
+            background-color: #252839;
+            color: #ffffff;
+            font-size: 16px;
+            -webkit-appearance: none;
+            /* Remove estilos padrões do navegador */
+            -moz-appearance: none;
+            appearance: none;
         }
 
 
@@ -214,7 +240,7 @@ mysqli_close($conexao);
             <li class="nav-item active">
                 <a class="nav-link" href="usuario.php">
                     <i class="fa fa-user-circle mr-2"></i>
-                    Usuários
+                    Administradores
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
@@ -228,7 +254,7 @@ mysqli_close($conexao);
             <li class="nav-item active">
                 <a class="nav-link" href="cliente.php">
                     <i class="fas fa-fw fa-user"></i>
-                    <span>Clientes</span></a>
+                    <span>Usuários</span></a>
             </li>
             <hr class="sidebar-divider my-0">
 
@@ -251,6 +277,8 @@ mysqli_close($conexao);
 
             <form action="actions/create.php" method="POST" class="to-do-form">
                 <input type="text" name="description" placeholder="Escreva aqui a descrição" required>
+
+                <input type="date" name="data" value="2024-08-30" />
 
                 <!-- Novo campo de seleção de usuário -->
                 <select name="user_id" required>
@@ -285,8 +313,13 @@ mysqli_close($conexao);
                                     <?= $task['completed'] ? 'checked' : '' ?>>
                                 <p class="task-description">
                                     <?= htmlspecialchars($task['description']) ?>
+
                                 </p>
+
+
+
                                 <div class="task-actions">
+                                    <p class="task-description-date"><?= date('d/m/Y', strtotime($task['data'])) ?></p>
                                     <a class="action-button edit-button">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
@@ -297,6 +330,9 @@ mysqli_close($conexao);
                                 <form action="actions/update.php" method="POST" class="to-do-form edit-task hidden">
                                     <input type="hidden" name="id" value="<?= $task['id'] ?>">
                                     <input type="text" name="description" placeholder="Edite sua tarefa aqui" value='<?= htmlspecialchars($task['description']) ?>'>
+
+                                    <input type="date" name="data" value="2024-08-30" />
+
                                     <button type="submit" class="form-button confirm-button">
                                         <i class="fa-solid fa-check"></i>
                                     </button>
@@ -321,6 +357,7 @@ mysqli_close($conexao);
                                     <?= htmlspecialchars($task['description']) ?>
                                 </p>
                                 <div class="task-actions">
+                                    <p class="task-description-date"><?= date('d/m/Y', strtotime($task['data'])) ?></p>
                                     <a class="action-button edit-button">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
@@ -331,6 +368,7 @@ mysqli_close($conexao);
                                 <form action="actions/update.php" method="POST" class="to-do-form edit-task hidden">
                                     <input type="hidden" name="id" value="<?= $task['id'] ?>">
                                     <input type="text" name="description" placeholder="Edite sua tarefa aqui" value='<?= htmlspecialchars($task['description']) ?>'>
+                                    <input type="date" name="data" value="2024-08-30" />
                                     <button type="submit" class="form-button confirm-button">
                                         <i class="fa-solid fa-check"></i>
                                     </button>
