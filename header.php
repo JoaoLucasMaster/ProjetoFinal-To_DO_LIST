@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Gerenciador de Ordem de Serviço</title>
+    <title>Gerenciador de Tarefas</title>
 	
 	<link rel="shortcut icon" href="img/favicon-alvina.png" type="image/x-icon" />
 
