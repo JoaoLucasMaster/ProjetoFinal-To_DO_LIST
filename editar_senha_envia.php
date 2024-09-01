@@ -10,9 +10,6 @@ if ($_SESSION['perfil'] == 1) {
 }elseif($_SESSION['perfil'] == 2){
 	require_once ("bd/bd_cliente.php");
 	$dados = editarSenhaCliente($codigo,$senha);
-}else{
-	require_once ("bd/bd_terceirizado.php");
-	$dados = editarSenhaTerceirizado($codigo,$senha);
 }
 
 if ($dados == 1){

@@ -168,6 +168,24 @@ function clienteConsultaTarefaCompleta($cod_usuario){
     return $dados;
 }
 
+function editarSenhaCliente($codigo,$senha){
+    $conexao = conecta_bd();
+    $query = "select *
+              from cliente
+              where cod='$codigo'";
+
+    $resultado = mysqli_query($conexao,$query);
+    $dados = mysqli_num_rows($resultado);
+    if($dados == 1){
+        $query = "update cliente
+        set senha = '$senha'
+        where cod = '$codigo'";
+        $resultado = mysqli_query($conexao,$query);
+        $dados = mysqli_affected_rows($conexao);
+        return $dados;
+    }
+
+}	
 
 
 ?>

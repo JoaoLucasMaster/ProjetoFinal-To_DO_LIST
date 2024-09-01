@@ -99,6 +99,24 @@ function editarUsuario($codigo,$status,$data){
 
 }
 
+function editarSenhaUsuario($codigo,$senha){
+    $conexao = conecta_bd();
+    $query = "select *
+              from usuario
+              where cod='$codigo'";
+
+    $resultado = mysqli_query($conexao,$query);
+    $dados = mysqli_num_rows($resultado);
+    if($dados == 1){
+        $query = "update usuario
+        set senha = '$senha'
+        where cod = '$codigo'";
+        $resultado = mysqli_query($conexao,$query);
+        $dados = mysqli_affected_rows($conexao);
+        return $dados;
+    }
+
+}
 
 
 

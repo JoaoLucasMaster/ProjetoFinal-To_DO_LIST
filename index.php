@@ -62,8 +62,7 @@ require_once('header.php');
                                             <select class="form-control" id="perfil" name="perfil" required>
                                                 <option value=""> </option>
                                                 <option value="1">Administrador</option>
-                                                <option value="2">Cliente</option>
-                                                <option value="3">Terceirizado</option>
+                                                <option value="2">Usuário</option>
                                             </select>
                                         </div>
                                         <!--implementar link "esqueci minha senha"--> 
