@@ -3,6 +3,7 @@ require_once('valida_session.php');
 require_once('header.php'); 
 require_once('sidebar.php'); 
 require_once ("bd/bd_ordem.php");
+require_once ("bd/bd_cliente.php");
 ?>
 
 <!-- Main Content -->
@@ -33,8 +34,8 @@ require_once ("bd/bd_ordem.php");
                                 if ($_SESSION['perfil'] == 2) {
                                     $cod_usuario = $_SESSION['cod_usu'];
                                     $status = 1;
-                                    $total = consultaStatusCliente($cod_usuario,$status);
-                                    echo ($total['total']);
+                                    $total = clienteConsultaTarefaPrioridade($cod_usuario);
+                                    echo ($total);
                                 }
                             
                             ?>
@@ -66,8 +67,8 @@ require_once ("bd/bd_ordem.php");
                                 if ($_SESSION['perfil'] == 2) {
                                     $cod_usuario = $_SESSION['cod_usu'];
                                     $status = 2;
-                                    $total = consultaStatusCliente($cod_usuario,$status);
-                                    echo ($total['total']);
+                                    $total = clienteConsultaTarefaNormal($cod_usuario);
+                                    echo ($total);
                                 }
                         
                             ?>  
@@ -98,15 +99,10 @@ require_once ("bd/bd_ordem.php");
                                 if ($_SESSION['perfil'] == 2) {
                                     $cod_usuario = $_SESSION['cod_usu'];
                                     $status = 3;
-                                    $total = consultaStatusCliente($cod_usuario,$status);
-                                    echo ($total['total']);
+                                    $total = clienteConsultaTarefaCompleta($cod_usuario);
+                                    echo ($total);
                                 }
-                                if ($_SESSION['perfil'] == 3) {
-                                    $cod_usuario = $_SESSION['cod_usu'];
-                                    $status = 3;
-                                    $total = consultaStatusTerceirizado($cod_usuario,$status);
-                                    echo ($total['total']);
-                                }
+                                
                             ?>  
                             </div>
                         </div>

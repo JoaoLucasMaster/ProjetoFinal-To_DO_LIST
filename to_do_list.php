@@ -153,7 +153,7 @@ mysqli_close($conexao);
         /* Ajustar o campo de texto e o botão para caberem lado a lado */
         input[name="description"] {
             width: 55%;
-            font-size: 25px;
+            font-size: 20px;
             /* Ajuste fino para aumentar o input */
         }
 

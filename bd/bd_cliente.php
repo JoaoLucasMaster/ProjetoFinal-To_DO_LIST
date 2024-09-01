@@ -108,5 +108,69 @@ function editarCliente($codigo,$status,$data){
 
 }
 
+function clienteConsultaTarefaPrioridade($cod_usuario){
+    $conexao = conecta_bd();
+    $query = $conexao->prepare("SELECT * FROM task WHERE cliente_id = '$cod_usuario' AND priority = 1 and completed = 0;");
+    
+    // Executar a consulta
+    $query->execute();
+    
+    // Obter o resultado da consulta
+    $resultado = $query->get_result();
+    
+    // Contar o número de linhas retornadas
+    $dados = $resultado->num_rows;
+
+    // Fechar a consulta e a conexão
+    $query->close();
+    $conexao->close();
+
+    // Retornar o contador
+    return $dados;
+}
+
+function clienteConsultaTarefaNormal($cod_usuario){
+    $conexao = conecta_bd();
+    $query = $conexao->prepare("SELECT * FROM task WHERE cliente_id = '$cod_usuario' AND priority = 0 and completed = 0;");
+    
+    // Executar a consulta
+    $query->execute();
+    
+    // Obter o resultado da consulta
+    $resultado = $query->get_result();
+    
+    // Contar o número de linhas retornadas
+    $dados = $resultado->num_rows;
+
+    // Fechar a consulta e a conexão
+    $query->close();
+    $conexao->close();
+
+    // Retornar o contador
+    return $dados;
+}
+
+function clienteConsultaTarefaCompleta($cod_usuario){
+    $conexao = conecta_bd();
+    $query = $conexao->prepare("SELECT * FROM task WHERE cliente_id = '$cod_usuario' AND  completed = 1;");
+    
+    // Executar a consulta
+    $query->execute();
+    
+    // Obter o resultado da consulta
+    $resultado = $query->get_result();
+    
+    // Contar o número de linhas retornadas
+    $dados = $resultado->num_rows;
+
+    // Fechar a consulta e a conexão
+    $query->close();
+    $conexao->close();
+
+    // Retornar o contador
+    return $dados;
+}
+
+
 
 ?>
