@@ -1,4 +1,3 @@
-
 <?php
 require_once('valida_session.php');
 require_once('header.php'); 
@@ -22,14 +21,14 @@ require_once('sidebar.php');
                 </div>
             </div>
             <div class="card-body">
-                <form class="user" action="" method="post" >
+                <form class="user" action="mail.php" method="post" enctype="multipart/form-data">
                    <div class="form-group">
                         <label> Nome Completo </label>
-                        <input type="text" class="form-control form-control-user" id="name" name="name" value="TESTE" readonly>
+                        <input type="text" class="form-control form-control-user" id="name" name="name" value="TESTE">
                     </div>
                     <div class="form-group">
                         <label> Email </label>
-                        <input type="text" class="form-control form-control-user" id="email" name="email" value="teste@gmail.com" readonly>
+                        <input type="text" class="form-control form-control-user" id="email" name="email" value="teste@gmail.com">
                     </div>
                     <div class="form-group">
                         <label> Assunto </label>
@@ -39,12 +38,16 @@ require_once('sidebar.php');
                         <label> Mensagem </label>
                         <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
                     </div>
-                                        
+
+                    <div class="form-group">
+                        <label for="arquivo">Selecione um arquivo:</label>
+                        <input type="file" id="arquivo" name="arquivo" required>
+                    </div>                   
 
                     <div class="card-footer text-muted" id="btn-form">
                         <div class=text-right>
                             <a title="Voltar" href="home.php"><button type="button" class="btn btn-success"><i class="fas fa-arrow-circle-left"></i>&nbsp;</i>Voltar</button></a>
-                            <a title="Enviar"><button type="submit" name="updatebtn" class="btn btn-primary uptadebtn"><i class="fa fa-envelope">&nbsp;</i>Enviar</button> </a>
+                            <a title="Enviar"><button type="submit" name="send" class="btn btn-primary uptadebtn"><i class="fa fa-envelope">&nbsp;</i>Enviar</button> </a>
                         </div>
                     </div>
                 </form>  
@@ -59,5 +62,3 @@ require_once('sidebar.php');
 <?php
 require_once('footer.php');
 ?>
-
-
