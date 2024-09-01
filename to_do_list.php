@@ -14,11 +14,27 @@ $conexao = conecta_bd();
 
 
 //alimentar a variavel $priorityTasks com as tarefas que possuem prioridade como objeto iteravel
-$sqlPriorityTasks = "SELECT * FROM task WHERE priority = 1";
-$resultPriorityTasks = mysqli_query($conexao, $sqlPriorityTasks);
 
-$sqlNoPriorityTasks = "SELECT * FROM task WHERE priority = 0";
-$resultNoPriorityTasks = mysqli_query($conexao, $sqlNoPriorityTasks);
+//criar um if para caso o usuario seja um cliente, ele só possa ver as tarefas que ele mesmo criou
+if ($_SESSION['perfil'] == 1) {
+    $sqlPriorityTasks = "SELECT * FROM task WHERE priority = 1";
+    $resultPriorityTasks = mysqli_query($conexao, $sqlPriorityTasks);
+
+    $sqlNoPriorityTasks = "SELECT * FROM task WHERE priority = 0";
+    $resultNoPriorityTasks = mysqli_query($conexao, $sqlNoPriorityTasks);
+} else {
+    $sqlPriorityTasks = "SELECT * FROM task WHERE priority = 1 AND cliente_id = " . $_SESSION['cod_usu'];
+    $resultPriorityTasks = mysqli_query($conexao, $sqlPriorityTasks);
+
+    $sqlNoPriorityTasks = "SELECT * FROM task WHERE priority = 0 AND cliente_id = " . $_SESSION['cod_usu'];
+    $resultNoPriorityTasks = mysqli_query($conexao, $sqlNoPriorityTasks);
+}
+
+// $sqlPriorityTasks = "SELECT * FROM task WHERE priority = 1";
+// $resultPriorityTasks = mysqli_query($conexao, $sqlPriorityTasks);
+
+// $sqlNoPriorityTasks = "SELECT * FROM task WHERE priority = 0";
+// $resultNoPriorityTasks = mysqli_query($conexao, $sqlNoPriorityTasks);
 
 
 
@@ -38,6 +54,16 @@ if ($result && mysqli_num_rows($result) > 0) {
     $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
+$clients = [];
+
+$sqlClients = "SELECT cod, nome FROM cliente";
+$resultClients = mysqli_query($conexao, $sqlClients);
+
+if ($resultClients && mysqli_num_rows($resultClients) > 0) {
+    $clients = mysqli_fetch_all($resultClients, MYSQLI_ASSOC);
+}
+
+
 mysqli_close($conexao);
 
 
@@ -54,6 +80,7 @@ mysqli_close($conexao);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon-alvina.png" type="image/x-icon" />
     <link rel="stylesheet" href="./css/styles.css">
     <style>
         /* Estilos adicionais para a sidebar */
@@ -207,11 +234,12 @@ mysqli_close($conexao);
             -moz-appearance: none;
             appearance: none;
         }
-        .picture{
+
+        .picture {
             width: 50px;
             height: 50px;
         }
-        
+
         /* Ajustar o estilo para o select em dispositivos móveis */
         @media (max-width: 600px) {
             select {
@@ -228,7 +256,8 @@ mysqli_close($conexao);
 
     <nav class="sidebar">
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.php">
-            <img class="picture" src="/img/favicon-alvina.png" alt="fotinha"> <p>TASK ADM</p>
+            <img class="picture" src="/img/favicon-alvina.png" alt="fotinha">
+            <p>TASK ADM</p>
         </a>
 
         <hr class="sidebar-divider my-0">
@@ -239,13 +268,31 @@ mysqli_close($conexao);
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Prioridades</span></a>
             </li>
-            <hr class="sidebar-divider my-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="usuario.php">
-                    <i class="fa fa-user-circle mr-2"></i>
-                    Administradores
-                </a>
-            </li>
+
+            <?php
+            if ($_SESSION['perfil'] == 1) {
+            ?>
+
+                <hr class="sidebar-divider my-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="usuario.php">
+                        <i class="fa fa-user-circle mr-2"></i>
+                        Administradores
+                    </a>
+                </li>
+
+                <hr class="sidebar-divider my-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="cliente.php">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Usuários</span></a>
+                </li>
+                <hr class="sidebar-divider my-0">
+
+            <?php
+            }
+            ?>
+
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
                 <a class="nav-link" href="to_do_list.php">
@@ -253,14 +300,6 @@ mysqli_close($conexao);
                     Tarefas
                 </a>
             </li>
-            <hr class="sidebar-divider my-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="cliente.php">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Usuários</span></a>
-            </li>
-            <hr class="sidebar-divider my-0">
-
             <li class="nav-item active">
                 <a class="nav-link" href="contato.php">
                     <i class="fa fa-envelope"></i>
@@ -278,109 +317,128 @@ mysqli_close($conexao);
         <div id="to_do">
             <h1>Lista de Afazeres</h1>
 
-            <form action="actions/create.php" method="POST" class="to-do-form">
-                <input type="text" name="description" placeholder="Escreva aqui a descrição" required>
+            <?php
+            if ($_SESSION['perfil'] == 1) {
+            ?>
 
-                <input type="date" name="data" value="2024-08-30" />
+                <!-- alterar a action deste form para "actions/createTaskCliente.php" APENAS SE estiver um cliente sendo selecionado no elemento "option" -->
+                <form action="actions/create.php" method="POST" class="to-do-form">
+                    <input type="text" name="description" placeholder="Escreva aqui a descrição" required>
+                    <input type="date" name="data" value="2024-08-30" />
+                    <select id="userSelect" name="user_id">
+                        <option value="">Selecione um usuário</option>
+                        <?php foreach ($users as $user): ?>
+                            <option value="<?= $user['cod'] ?>"><?= htmlspecialchars($user['nome']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
 
-                <!-- Novo campo de seleção de usuário -->
-                <select name="user_id" required>
-                    <option value="">Selecione um usuário</option>
-                    <?php foreach ($users as $user): ?>
-                        <option value="<?= $user['cod'] ?>"><?= htmlspecialchars($user['nome']) ?></option>
-                    <?php endforeach; ?>
-                </select>
+                    <select id="clientSelect" name="cliente_id">
+                        <option value="">Selecione um cliente</option>
+                        <?php foreach ($clients as $client): ?>
+                            <option value="<?= $client['cod'] ?>"><?= htmlspecialchars($client['nome']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php
+            } else {
+                ?>
 
-                <!-- novo campo para decidir se a tarefa sera prioridade -->
-                <select name="priority" required>
-                    <option value="0">Normal</option>
-                    <option value="1">Prioridade</option>
-                </select>
+                    <form action="actions/createTaskCliente.php" method="POST" class="to-do-form">
+                        <input type="text" name="description" placeholder="Escreva aqui a descrição" required>
 
-                <button type="submit" class="form-button">
-                    <i class="fa-solid fa-plus"></i>
-                </button>
-            </form>
+                        <input type="date" name="data" value="2024-08-30" />
+                    <?php
+                }
+                    ?>
+                    <!-- novo campo para decidir se a tarefa sera prioridade -->
+                    <select name="priority" required>
+                        <option value="0">Normal</option>
+                        <option value="1">Prioridade</option>
+                    </select>
 
-            <div class="container">
-                <div class="column">
-                    <h1>Tarefas com prioridade</h1>
-                    <div id="tasks">
-                        <?php foreach ($resultPriorityTasks as $task): ?>
-                            <div class="task">
-                                <input
-                                    type="checkbox"
-                                    name="progress"
-                                    class="progress <?= $task['completed'] ? 'done' : '' ?>"
-                                    data-task-id="<?= $task['id'] ?>"
-                                    <?= $task['completed'] ? 'checked' : '' ?>>
-                                <p class="task-description">
-                                    <?= htmlspecialchars($task['description']) ?>
+                    <button type="submit" class="form-button">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    </form>
 
-                                </p>
+                    <div class="container">
+                        <div class="column">
+                            <h1>Tarefas com prioridade</h1>
+                            <div id="tasks">
+                                <?php foreach ($resultPriorityTasks as $task): ?>
+                                    <div class="task">
+                                        <input
+                                            type="checkbox"
+                                            name="progress"
+                                            class="progress <?= $task['completed'] ? 'done' : '' ?>"
+                                            data-task-id="<?= $task['id'] ?>"
+                                            <?= $task['completed'] ? 'checked' : '' ?>>
+                                        <p class="task-description">
+                                            <?= htmlspecialchars($task['description']) ?>
+
+                                        </p>
 
 
 
-                                <div class="task-actions">
-                                    <p class="task-description-date"><?= date('d/m/Y', strtotime($task['data'])) ?></p>
-                                    <a class="action-button edit-button">
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </a>
-                                    <a href="actions/delete.php?id=<?= $task['id'] ?>" class="action-button delete-button">
-                                        <i class="fa-regular fa-trash-can"></i>
-                                    </a>
-                                </div>
-                                <form action="actions/update.php" method="POST" class="to-do-form edit-task hidden">
-                                    <input type="hidden" name="id" value="<?= $task['id'] ?>">
-                                    <input type="text" name="description" placeholder="Edite sua tarefa aqui" value='<?= htmlspecialchars($task['description']) ?>'>
+                                        <div class="task-actions">
+                                            <p class="task-description-date"><?= date('d/m/Y', strtotime($task['data'])) ?></p>
+                                            <a class="action-button edit-button">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
+                                            <a href="actions/delete.php?id=<?= $task['id'] ?>" class="action-button delete-button">
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </a>
+                                        </div>
+                                        <form action="actions/update.php" method="POST" class="to-do-form edit-task hidden">
+                                            <input type="hidden" name="id" value="<?= $task['id'] ?>">
+                                            <input type="text" name="description" placeholder="Edite sua tarefa aqui" value='<?= htmlspecialchars($task['description']) ?>'>
 
-                                    <input type="date" name="data" value="2024-08-30" />
+                                            <input type="date" name="data" value="2024-08-30" />
 
-                                    <button type="submit" class="form-button confirm-button">
-                                        <i class="fa-solid fa-check"></i>
-                                    </button>
-                                </form>
+                                            <button type="submit" class="form-button confirm-button">
+                                                <i class="fa-solid fa-check"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                <?php endforeach ?>
                             </div>
-                        <?php endforeach ?>
-                    </div>
-                </div>
+                        </div>
 
-                <div class="column">
-                    <h1>Tarefas sem prioridade</h1>
-                    <div id="tasks">
-                        <?php foreach ($resultNoPriorityTasks as $task): ?>
-                            <div class="task">
-                                <input
-                                    type="checkbox"
-                                    name="progress"
-                                    class="progress <?= $task['completed'] ? 'done' : '' ?>"
-                                    data-task-id="<?= $task['id'] ?>"
-                                    <?= $task['completed'] ? 'checked' : '' ?>>
-                                <p class="task-description">
-                                    <?= htmlspecialchars($task['description']) ?>
-                                </p>
-                                <div class="task-actions">
-                                    <p class="task-description-date"><?= date('d/m/Y', strtotime($task['data'])) ?></p>
-                                    <a class="action-button edit-button">
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </a>
-                                    <a href="actions/delete.php?id=<?= $task['id'] ?>" class="action-button delete-button">
-                                        <i class="fa-regular fa-trash-can"></i>
-                                    </a>
-                                </div>
-                                <form action="actions/update.php" method="POST" class="to-do-form edit-task hidden">
-                                    <input type="hidden" name="id" value="<?= $task['id'] ?>">
-                                    <input type="text" name="description" placeholder="Edite sua tarefa aqui" value='<?= htmlspecialchars($task['description']) ?>'>
-                                    <input type="date" name="data" value="2024-08-30" />
-                                    <button type="submit" class="form-button confirm-button">
-                                        <i class="fa-solid fa-check"></i>
-                                    </button>
-                                </form>
+                        <div class="column">
+                            <h1>Tarefas sem prioridade</h1>
+                            <div id="tasks">
+                                <?php foreach ($resultNoPriorityTasks as $task): ?>
+                                    <div class="task">
+                                        <input
+                                            type="checkbox"
+                                            name="progress"
+                                            class="progress <?= $task['completed'] ? 'done' : '' ?>"
+                                            data-task-id="<?= $task['id'] ?>"
+                                            <?= $task['completed'] ? 'checked' : '' ?>>
+                                        <p class="task-description">
+                                            <?= htmlspecialchars($task['description']) ?>
+                                        </p>
+                                        <div class="task-actions">
+                                            <p class="task-description-date"><?= date('d/m/Y', strtotime($task['data'])) ?></p>
+                                            <a class="action-button edit-button">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
+                                            <a href="actions/delete.php?id=<?= $task['id'] ?>" class="action-button delete-button">
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </a>
+                                        </div>
+                                        <form action="actions/update.php" method="POST" class="to-do-form edit-task hidden">
+                                            <input type="hidden" name="id" value="<?= $task['id'] ?>">
+                                            <input type="text" name="description" placeholder="Edite sua tarefa aqui" value='<?= htmlspecialchars($task['description']) ?>'>
+                                            <input type="date" name="data" value="2024-08-30" />
+                                            <button type="submit" class="form-button confirm-button">
+                                                <i class="fa-solid fa-check"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                <?php endforeach ?>
                             </div>
-                        <?php endforeach ?>
+                        </div>
                     </div>
-                </div>
-            </div>
 
         </div>
     </div>
@@ -390,6 +448,9 @@ mysqli_close($conexao);
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="./js/script.js"></script>
+
+
+
 </body>
 
 </html>

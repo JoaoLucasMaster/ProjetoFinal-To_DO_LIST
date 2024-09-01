@@ -31,16 +31,6 @@
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="to_do_list.php">
-                <i class="fas fa-fw fa-clipboard-list"></i>
-                <span>Tarefas</span></a>
-        </li>
-
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
             <a class="nav-link" href="cliente.php">
                 <i class="fas fa-fw fa-user"></i>
                 <span>Usuários</span></a>
@@ -60,6 +50,16 @@
     <?php
     }
     ?>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="to_do_list.php">
+                <i class="fas fa-fw fa-clipboard-list"></i>
+                <span>Tarefas</span></a>
+    </li>
+
 
     <hr class="sidebar-divider my-0">
     <!-- Nav Item - Dashboard -->
