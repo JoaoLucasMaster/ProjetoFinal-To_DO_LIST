@@ -9,7 +9,7 @@
     $dados = removeCliente($codigo);
 
     if($dados == 0){
-        $_SESSION['texto_erro'] = 'Não é possível excluir o cliente, pois ele está atrelado a uma ordem!';
+        $_SESSION['texto_erro'] = 'Não é possível excluir o usuário, pois ele está atrelado a uma tarefa!';
         header ("Location:cliente.php");
     }else{
         $_SESSION['texto_sucesso'] = 'Os dados do cliente foram excluidos do sistema.';

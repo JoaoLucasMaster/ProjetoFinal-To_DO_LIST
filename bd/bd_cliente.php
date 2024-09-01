@@ -43,11 +43,13 @@ function buscaCliente($email){
     return $dados;
 }
 
-function cadastraCliente($nome,$email,$senha,$endereco,$numero,$bairro,$cidade,$telefone,$status,$perfil,$data, $estado, $cep){
+
+
+function cadastraCliente($nome,$email,$senha,$endereco,$numero,$bairro,$cidade,$telefone,$status,$perfil,$data){
 
     $conexao = conecta_bd();
-    $query = "Insert Into cliente(nome,email,senha,endereco,numero,bairro,cidade,telefone,status,perfil,data, estado, cep) 
-    values('$nome','$email','$senha','$endereco','$numero','$bairro','$cidade','$telefone','$status','$perfil','$data', '$estado', '$cep')";
+    $query = "Insert Into cliente(nome,email,senha,endereco,numero,bairro,cidade,telefone,status,perfil,data) 
+    values('$nome','$email','$senha','$endereco','$numero','$bairro','$cidade','$telefone','$status','$perfil','$data')";
 
     $resultado = mysqli_query($conexao, $query);
     $dados = mysqli_affected_rows($conexao);
@@ -89,24 +91,19 @@ function buscaClienteeditar($codigo){
 
 }
 
-function editarCliente($codigo,$status,$data){
+function editarCliente($codigo, $nome, $email, $endereco, $numero, $bairro, $cidade, $telefone, $status){
     $conexao = conecta_bd();
-    $query = "select *
-              from cliente
-              where cod='$codigo'";
+    $query = "update cliente
+              set nome = '$nome', email = '$email', endereco = '$endereco', numero = '$numero', bairro = '$bairro', cidade = '$cidade', telefone = '$telefone', status = '$status'
+              where cod = '$codigo'";
 
-    $resultado = mysqli_query($conexao,$query);
-    $dados = mysqli_num_rows($resultado);
-    if($dados == 1){
-        $query = "update cliente
-        set status = '$status', data = '$data'
-        where cod = '$codigo'";
-        $resultado = mysqli_query($conexao,$query);
-        $dados = mysqli_affected_rows($conexao);
-        return $dados;
-    }
+    $resultado = mysqli_query($conexao, $query);
+    $dados = mysqli_affected_rows($conexao);
+
+    return $dados;
 
 }
+
 
 function clienteConsultaTarefaPrioridade($cod_usuario){
     $conexao = conecta_bd();

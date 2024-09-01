@@ -39,40 +39,40 @@ $status = $dados["status"];
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <label> Nome Completo </label>
-                            <input type="text" class="form-control form-control-user" id="nome" name="nome" value="<?= $nome ?>" readonly>
+                            <input type="text" class="form-control form-control-user" id="nome" name="nome" value="<?= $nome ?>" required >
                         </div>
                         <div class="col-sm-6">
                             <label> Email </label>
-                            <input type="email" class="form-control form-control-user" id="email" name="email" value="<?= $email ?>" readonly>
+                            <input type="email" class="form-control form-control-user" id="email" name="email" value="<?= $email ?>" required>
                         </div>
                     </div>
 
                      <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <label> Endereço </label>
-                            <input type="text" class="form-control form-control-user" id="endereco" name="endereco" value="<?= $endereco ?>" readonly>
+                            <input type="text" class="form-control form-control-user" id="endereco" name="endereco" value="<?= $endereco ?>" required>
                         </div>
                         <div class="col-sm-6">
                             <label> Número </label>
-                            <input type="text" class="form-control form-control-user" id="numero" name="numero" value="<?= $numero ?>" readonly>
+                            <input type="text" class="form-control form-control-user" id="numero" name="numero" value="<?= $numero ?>" required>
                         </div>
                     </div>
 
                      <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <label> Bairro </label>
-                            <input type="text" class="form-control form-control-user" id="bairro" name="bairro" value="<?= $bairro ?>" readonly>
+                            <input type="text" class="form-control form-control-user" id="bairro" name="bairro" value="<?= $bairro ?>" required>
                         </div>
                         <div class="col-sm-6">
                             <label> Cidade </label>
-                            <input type="text" class="form-control form-control-user" id="cidade" name="cidade" value="<?= $cidade ?>" readonly>
+                            <input type="text" class="form-control form-control-user" id="cidade" name="cidade" value="<?= $cidade ?>" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <label> Telefone - Ex.: (11) 91234-1234 </label>
-                            <input type="tel" class="form-control form-control-user" id="telefone" name="telefone" value="<?=$telefone ?>" readonly>
+                            <input type="tel" class="form-control form-control-user" id="telefone" name="telefone" value="<?=$telefone ?>" required>
                         </div>
                          <div class="col-sm-6">
                             <label> Situação </label>
@@ -102,5 +102,3 @@ $status = $dados["status"];
 <?php
 require_once('footer.php');
 ?>
-
-
