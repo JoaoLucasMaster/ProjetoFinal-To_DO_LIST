@@ -30,7 +30,7 @@ unset ($_SESSION['telefone']);
                         <h6 class="m-0 font-weight-bold text-primary" id="title">GERENCIAR INFORMAÇÕES DOS USUÁRIOS</h6>
                     </div>
                     <div class="col-md-4 card_button_title">
-                        <a title="Adicionar novo cliente" href="cad_cliente.php"><button type="button" class="btn btn-primary btn-sm card_button_title" data-toggle="modal" id=" "> <i class="fas fa-fw fa-user">&nbsp;</i> Adicionar Cliente</button></a>
+                        <a title="Adicionar novo cliente" href="cad_cliente.php"><button type="button" class="btn btn-primary btn-sm card_button_title" data-toggle="modal" id=" "> <i class="fas fa-fw fa-user">&nbsp;</i> Adicionar Usuário</button></a>
 
                     </div>
                 </div>

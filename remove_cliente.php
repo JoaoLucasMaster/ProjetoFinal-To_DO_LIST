@@ -12,11 +12,11 @@
         $_SESSION['texto_erro'] = 'Não é possível excluir o usuário, pois ele está atrelado a uma tarefa!';
         header ("Location:cliente.php");
     }else{
-        $_SESSION['texto_sucesso'] = 'Os dados do cliente foram excluidos do sistema.';
+        $_SESSION['texto_sucesso'] = 'Os dados do usuário foram excluidos do sistema.';
         header ("Location:cliente.php");
     }
 }else{
-    $_SESSION['texto_erro'] = 'O cliente não pode ser excluído do sistema, pois está logado!';
+    $_SESSION['texto_erro'] = 'O usuário não pode ser excluído do sistema, pois está logado!';
         header ("Location:cliente.php");
 
 }

@@ -16,7 +16,7 @@ require_once('sidebar.php');
             <div class="card-header py-3">
                 <div class="row">
                     <div class="col-md-8">
-                        <h6 class="m-0 font-weight-bold text-primary" id="title">ADICIONAR CLIENTE</h6>
+                        <h6 class="m-0 font-weight-bold text-primary" id="title">ADICIONAR USUÁRIO</h6>
                     </div>
                 </div>
             </div>
