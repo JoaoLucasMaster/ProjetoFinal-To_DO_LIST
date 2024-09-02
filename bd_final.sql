@@ -36,13 +36,13 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `perfil` int(11) NOT NULL,
   `data` int(11) NOT NULL,
   PRIMARY KEY (`cod`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela ordemservico.cliente: ~2 rows (aproximadamente)
 DELETE FROM `cliente`;
 INSERT INTO `cliente` (`cod`, `nome`, `email`, `senha`, `endereco`, `numero`, `bairro`, `cidade`, `telefone`, `status`, `perfil`, `data`) VALUES
-	(4, 'Danilo Alves Alvarenga', 'danilo@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Avenida Dolores Silva', '335', 'Centro', 'Aguanil', '(35) 99984-9594', 1, 2, 22),
-	(5, 'Mariany Alves', 'mary@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Avenida Dolores Silva', '335', 'Centro', 'Aguanil', '(35) 99984-9594', 1, 2, 22);
+	(4, 'Danilo Alves Alvarenga', 'danilo@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 'Avenida Dolores Silva', '335', 'Centro', 'asda', '(35) 99984-9594', 1, 2, 22),
+	(5, 'Mariany Alves', 'mary@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Avenida Dolores Silva', '335', 'Centro1', 'Aguanil', '(35) 99984-9594', 1, 2, 22);
 
 -- Copiando estrutura para tabela ordemservico.ordem
 DROP TABLE IF EXISTS `ordem`;
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `ordem` (
   CONSTRAINT `foreign_key_cod_terceirizado` FOREIGN KEY (`cod_terceirizado`) REFERENCES `terceirizado` (`cod`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela ordemservico.ordem: ~4 rows (aproximadamente)
+-- Copiando dados para a tabela ordemservico.ordem: ~5 rows (aproximadamente)
 DELETE FROM `ordem`;
 INSERT INTO `ordem` (`cod`, `cod_cliente`, `cod_terceirizado`, `cod_servico`, `data_servico`, `status`, `data`) VALUES
 	(10, 5, 8, 5, '2022-07-16', 2, '2022-07-15'),
@@ -94,17 +94,28 @@ CREATE TABLE IF NOT EXISTS `task` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(50) NOT NULL,
   `completed` tinyint(1) DEFAULT 0,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `cliente_id` int(11) DEFAULT NULL,
+  `priority` tinyint(1) DEFAULT 0,
+  `data` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_user_task` (`user_id`),
+  KEY `fk_cliente_task` (`cliente_id`),
+  CONSTRAINT `fk_cliente_task` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cod`) ON DELETE CASCADE,
   CONSTRAINT `fk_user_task` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`cod`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela ordemservico.task: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela ordemservico.task: ~8 rows (aproximadamente)
 DELETE FROM `task`;
-INSERT INTO `task` (`id`, `description`, `completed`, `user_id`) VALUES
-	(10, 'Boca aberta', 0, 30),
-	(11, 'Teste Kuka', 0, 25);
+INSERT INTO `task` (`id`, `description`, `completed`, `user_id`, `cliente_id`, `priority`, `data`) VALUES
+	(30, 'tarefa joao ', 0, 30, NULL, 1, '2024-09-20'),
+	(34, 'tarefa para joao', 0, 30, NULL, 0, '2024-09-18'),
+	(39, 'tarefa mary', 0, NULL, 5, 0, '2024-09-18'),
+	(41, 'TAREFA KUKA IMPORTANTE', 0, 25, NULL, 1, '2024-08-30'),
+	(42, 'TAREFA MARY IMPORTANTE', 0, NULL, 5, 1, '2024-08-30'),
+	(59, 'teste', 1, NULL, 4, 0, '2024-09-12'),
+	(62, 'teste', 0, NULL, 4, 0, '2024-08-30'),
+	(63, 'teste', 0, NULL, 4, 1, '2024-08-30');
 
 -- Copiando estrutura para tabela ordemservico.terceirizado
 DROP TABLE IF EXISTS `terceirizado`;
@@ -142,13 +153,13 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `cidade` varchar(50) NOT NULL,
   `estado` varchar(2) NOT NULL,
   PRIMARY KEY (`cod`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela ordemservico.usuario: ~2 rows (aproximadamente)
 DELETE FROM `usuario`;
 INSERT INTO `usuario` (`cod`, `nome`, `senha`, `email`, `perfil`, `status`, `data`, `cep`, `logradouro`, `bairro`, `cidade`, `estado`) VALUES
-	(25, 'kuka', 'e10adc3949ba59abbe56e057f20f883e', 'kuka@gmail.com', 1, 1, '2024-08-12', '', '', '', '', ''),
-	(30, 'Joao Pedro', 'e10adc3949ba59abbe56e057f20f883e', 'Pejo@gmail.com.br', 1, 1, '2024-08-30', '37750-000', 'Teste', 'Centro', 'Machado', 'MG');
+	(25, 'kuka', '827ccb0eea8a706c4c34a16891f84e7b', 'kuka@gmail.com', 1, 1, '2024-08-12', '', '', '', '', ''),
+	(30, 'Joao Pedro', 'e10adc3949ba59abbe56e057f20f883e', 'Pejo@gmail.com.br', 1, 1, '2024-09-02', '37750-000', 'Teste', 'Centro', 'Machado', 'MG');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
