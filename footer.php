@@ -1,5 +1,5 @@
         <!-- Footer -->
-        <footer class="sticky-footer bg-gradient-aqua">
+        <footer class="sticky-footer bg-gradient-aqua-footer">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
                     <span>DESENVOLVIDO POR &copy; JP E JL 2024</span>

@@ -80,7 +80,8 @@ mysqli_close($conexao);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="img/favicon-alvina.png" type="image/x-icon" />
+    <link rel="shortcut icon" src="./img/favicon-alvina.png" type="image/x-icon" />
+
     <link rel="stylesheet" href="./css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
@@ -93,9 +94,9 @@ mysqli_close($conexao);
             z-index: 1000;
             padding: 48px 0;
             /* Ajuste o padding conforme necessário */
-            background-color: #4B0082;
-            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #4B0082), to(#224abe));
-            background-image: linear-gradient(180deg, #4B0082 10%, #224abe 100%);
+            background-color: #736EBD;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #736EBD), to(#0762B8));
+            background-image: linear-gradient(180deg, #736EBD 10%, #0762B8 100%);
             background-size: cover;
             /* Cor de fundo da sidebar */
         }
@@ -257,7 +258,7 @@ mysqli_close($conexao);
 
     <nav class="sidebar">
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.php">
-            <img class="picture" src="/img/favicon-alvina.png" alt="fotinha">
+            <img class="picture" src="./img/favicon-alvina.png" alt="fotinha">
             <p>TASK ADM</p>
         </a>
 
@@ -449,50 +450,50 @@ mysqli_close($conexao);
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="./js/script.js"></script>
-    
+
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector(".to-do-form");
-    const userSelect = document.getElementById("userSelect");
-    const clientSelect = document.getElementById("clientSelect");
-    const submitButton = form.querySelector("button[type='submit']");
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector(".to-do-form");
+            const userSelect = document.getElementById("userSelect");
+            const clientSelect = document.getElementById("clientSelect");
+            const submitButton = form.querySelector("button[type='submit']");
 
-    form.addEventListener("submit", function(event) {
-        const userSelected = userSelect.value.trim() !== "";
-        const clientSelected = clientSelect.value.trim() !== "";
+            form.addEventListener("submit", function(event) {
+                const userSelected = userSelect.value.trim() !== "";
+                const clientSelected = clientSelect.value.trim() !== "";
 
-        // Verifica se a tarefa não está atribuída a ninguém ou a duas pessoas
-        if (!userSelected && !clientSelected) {
-            event.preventDefault(); 
+                // Verifica se a tarefa não está atribuída a ninguém ou a duas pessoas
+                if (!userSelected && !clientSelected) {
+                    event.preventDefault();
 
-            Swal.fire({
-            icon: 'error',
-            title: 'Erro',
-            text: 'Por favor, selecione um usuário ou cliente!',
-            confirmButtonText: 'OK',
-            customClass: {
-                confirmButton: 'btn btn-primary'
-            },
-            buttonsStyling: false
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro',
+                        text: 'Por favor, selecione um usuário ou cliente!',
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    });
+
+                } else if (userSelected && clientSelected) {
+                    event.preventDefault();
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro',
+                        text: 'Por favor, selecione apenas um usuário ou cliente!',
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    });
+                }
+            });
         });
-
-        } else if (userSelected && clientSelected) {
-            event.preventDefault(); 
-            
-            Swal.fire({
-            icon: 'error',
-            title: 'Erro',
-            text: 'Por favor, selecione apenas um usuário ou cliente!',
-            confirmButtonText: 'OK',
-            customClass: {
-                confirmButton: 'btn btn-primary'
-            },
-            buttonsStyling: false
-        });
-        }
-    });
-});
-</script>
+    </script>
 
 
 </body>
