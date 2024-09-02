@@ -82,6 +82,7 @@ mysqli_close($conexao);
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="img/favicon-alvina.png" type="image/x-icon" />
     <link rel="stylesheet" href="./css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* Estilos adicionais para a sidebar */
         .sidebar {
@@ -448,7 +449,50 @@ mysqli_close($conexao);
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="./js/script.js"></script>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector(".to-do-form");
+    const userSelect = document.getElementById("userSelect");
+    const clientSelect = document.getElementById("clientSelect");
+    const submitButton = form.querySelector("button[type='submit']");
 
+    form.addEventListener("submit", function(event) {
+        const userSelected = userSelect.value.trim() !== "";
+        const clientSelected = clientSelect.value.trim() !== "";
+
+        // Verifica se a tarefa não está atribuída a ninguém ou a duas pessoas
+        if (!userSelected && !clientSelected) {
+            event.preventDefault(); 
+
+            Swal.fire({
+            icon: 'error',
+            title: 'Erro',
+            text: 'Por favor, selecione um usuário ou cliente!',
+            confirmButtonText: 'OK',
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false
+        });
+
+        } else if (userSelected && clientSelected) {
+            event.preventDefault(); 
+            
+            Swal.fire({
+            icon: 'error',
+            title: 'Erro',
+            text: 'Por favor, selecione apenas um usuário ou cliente!',
+            confirmButtonText: 'OK',
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false
+        });
+        }
+    });
+});
+</script>
 
 
 </body>
