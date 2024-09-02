@@ -7,7 +7,7 @@ require_once ("bd/bd_cliente.php");
 ?>
 
 <!-- Main Content -->
-<div id="content">
+<div id="content" class="bg-gradient-aqua">
  <?php require_once('navbar.php');?>
 
  <!-- Begin Page Content -->

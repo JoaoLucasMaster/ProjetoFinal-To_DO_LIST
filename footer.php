@@ -1,8 +1,8 @@
         <!-- Footer -->
-        <footer class="sticky-footer bg-white">
+        <footer class="sticky-footer bg-gradient-aqua">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2023</span>
+                    <span>DESENVOLVIDO POR &copy; JP E JL 2024</span>
                 </div>
             </div>
         </footer>

@@ -5,12 +5,12 @@ require_once('sidebar.php');
 ?>
 
 <!-- Main Content -->
-<div id="content">
+<div id="content" class="bg-gradient-aqua">
 
     <?php require_once('navbar.php');?>
 
     <!-- Begin Page Content -->
-    <div class="container-fluid">
+    <div class="container-fluid" >
 
         <div class="card shadow mb-2">
             <div class="card-header py-3">

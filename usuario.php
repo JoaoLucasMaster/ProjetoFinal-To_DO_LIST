@@ -9,7 +9,7 @@ unset ($_SESSION['senha']);
 ?>
 
 <!-- Main Content -->
-<div id="content">
+<div id="content" class="bg-gradient-aqua">
 
     <?php require_once('navbar.php');?>
 
